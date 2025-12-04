@@ -1,0 +1,99 @@
+{
+  "tfidf_metrics": {
+    "P@1": 0.77,
+    "P@3": 0.85,
+    "P@5": 0.87,
+    "P@10": 0.89,
+    "R@1": 0.77,
+    "R@3": 0.85,
+    "R@5": 0.87,
+    "R@10": 0.89,
+    "MRR": 0.8120396825396827,
+    "Hit@1": 0.77
+  },
+  "sbert_metrics": {
+    "P@1": 0.79,
+    "P@3": 0.81,
+    "P@5": 0.84,
+    "P@10": 0.86,
+    "R@1": 0.79,
+    "R@3": 0.81,
+    "R@5": 0.84,
+    "R@10": 0.86,
+    "MRR": 0.8101785714285714,
+    "Hit@1": 0.79
+  },
+  "comparison": [
+    {
+      "Metric": "P@1",
+      "TF-IDF": 0.77,
+      "SBERT": 0.79,
+      "Difference": 0.02,
+      "Winner": "SBERT"
+    },
+    {
+      "Metric": "P@3",
+      "TF-IDF": 0.85,
+      "SBERT": 0.81,
+      "Difference": -0.04,
+      "Winner": "TF-IDF"
+    },
+    {
+      "Metric": "P@5",
+      "TF-IDF": 0.87,
+      "SBERT": 0.84,
+      "Difference": -0.03,
+      "Winner": "TF-IDF"
+    },
+    {
+      "Metric": "P@10",
+      "TF-IDF": 0.89,
+      "SBERT": 0.86,
+      "Difference": -0.03,
+      "Winner": "TF-IDF"
+    },
+    {
+      "Metric": "R@1",
+      "TF-IDF": 0.77,
+      "SBERT": 0.79,
+      "Difference": 0.02,
+      "Winner": "SBERT"
+    },
+    {
+      "Metric": "R@3",
+      "TF-IDF": 0.85,
+      "SBERT": 0.81,
+      "Difference": -0.04,
+      "Winner": "TF-IDF"
+    },
+    {
+      "Metric": "R@5",
+      "TF-IDF": 0.87,
+      "SBERT": 0.84,
+      "Difference": -0.03,
+      "Winner": "TF-IDF"
+    },
+    {
+      "Metric": "R@10",
+      "TF-IDF": 0.89,
+      "SBERT": 0.86,
+      "Difference": -0.03,
+      "Winner": "TF-IDF"
+    },
+    {
+      "Metric": "MRR",
+      "TF-IDF": 0.812,
+      "SBERT": 0.8102,
+      "Difference": -0.0019,
+      "Winner": "TF-IDF"
+    },
+    {
+      "Metric": "Hit@1",
+      "TF-IDF": 0.77,
+      "SBERT": 0.79,
+      "Difference": 0.02,
+      "Winner": "SBERT"
+    }
+  ],
+  "n_test_samples": 100
+}

@@ -1,0 +1,63 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+
+# Virtual environment
+venv/
+env/
+.venv/
+ENV/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.cursor/
+
+# Environment variables
+.env
+.env.local
+
+# Large data files - DO NOT UPLOAD
+*.zip
+data/raw/
+*.pkl
+*.npy
+*.bin
+
+# Keep the processed corpus (it's small, just text)
+# data/processed/faq_corpus.csv - KEEP THIS
+
+# Model files - TOO LARGE FOR GITHUB
+models/
+*.faiss
+
+# Logs
+logs/
+*.log
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Distribution
+dist/
+build/
+*.egg-info/
+
+# Large PDFs and images (keep only essential)
+*.pdf
+
+# Temporary files
+*.tmp
+*.temp
+New folder/
+
+# Test files
+inspect_hr_json.py
