@@ -35,9 +35,10 @@ data/raw/
 models/
 *.faiss
 
-# Logs
-logs/
+# Logs (but keep visualizations)
 *.log
+logs/*.log
+!logs/visualizations/
 
 # Jupyter
 .ipynb_checkpoints/
