@@ -32,7 +32,7 @@ from nltk.stem import WordNetLemmatizer
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
-# Try to import sentence transformers and faiss
+# Try to import SBERT - we'll use pre-computed embeddings for speed
 try:
     from sentence_transformers import SentenceTransformer
     import faiss
@@ -44,7 +44,7 @@ except ImportError:
 # CONFIGURATION
 # ============================================================
 DATA_PATH = Path("data/processed/faq_corpus.csv")
-SAMPLE_DATA_URL = "https://raw.githubusercontent.com/your-repo/main/data/processed/faq_corpus.csv"
+EMBEDDINGS_PATH = Path("data/processed/sbert_embeddings.npy")
 
 # ============================================================
 # TEXT PREPROCESSING
@@ -139,26 +139,27 @@ def search_tfidf(query: str, corpus_df, vectorizer, tfidf_matrix, top_k: int = 5
     return results
 
 # ============================================================
-# SBERT MODEL
+# SBERT MODEL (using pre-computed embeddings for fast loading)
 # ============================================================
 @st.cache_resource
 def build_sbert_model(_corpus_df):
-    """Build SBERT + FAISS model with caching."""
+    """Load SBERT model and pre-computed embeddings."""
     if not SBERT_AVAILABLE:
         return None, None
     
-    with st.spinner("🔄 Building SBERT index (first time only, may take a few minutes)..."):
+    # Check if pre-computed embeddings exist
+    if not EMBEDDINGS_PATH.exists():
+        st.warning("⚠️ Pre-computed embeddings not found. Run precompute_embeddings.py locally first.")
+        return None, None
+    
+    with st.spinner("🔄 Loading SBERT model and embeddings..."):
+        # Load model (only for encoding queries - fast!)
         model = SentenceTransformer('all-MiniLM-L6-v2')
         
-        questions = _corpus_df['question'].tolist()
-        embeddings = model.encode(
-            questions,
-            show_progress_bar=True,
-            convert_to_numpy=True,
-            normalize_embeddings=True
-        )
+        # Load pre-computed embeddings (much faster than computing!)
+        embeddings = np.load(EMBEDDINGS_PATH)
         
-        # Build FAISS index
+        # Build FAISS index from pre-computed embeddings
         dimension = embeddings.shape[1]
         index = faiss.IndexFlatIP(dimension)
         index.add(embeddings.astype('float32'))
@@ -291,11 +292,12 @@ def main():
             mode = st.radio(
                 "Search Mode",
                 ["sbert", "tfidf"],
-                format_func=lambda x: "🧠 Semantic (SBERT)" if x == "sbert" else "📝 Keyword (TF-IDF)"
+                format_func=lambda x: "🧠 Semantic (SBERT)" if x == "sbert" else "📝 Keyword (TF-IDF)",
+                index=0  # Default to SBERT
             )
         else:
             mode = "tfidf"
-            st.info("ℹ️ Using TF-IDF mode (SBERT not available)")
+            st.info("📝 Using TF-IDF keyword search")
         
         top_k = st.slider("Results", 1, 10, 5)
         
